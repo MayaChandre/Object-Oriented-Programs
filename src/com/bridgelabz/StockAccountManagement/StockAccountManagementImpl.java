@@ -1,39 +1,68 @@
 package com.bridgelabz.StockAccountManagement;
+import java.util.LinkedList;		
+			
+public class StockAccountManagementImpl implements StockAccountManagement{
 
-	import java.util.LinkedList;
+	LinkedList<Stocks> sharesList = new LinkedList<Stocks>();
+	
+	//method to Add Stocks
+	@Override
+	public void addStocks(Stocks share) {
+		if (sharesList.contains(share)) {
+			System.err.println("Inventory Item Exists");
+		}
+		else {
+		sharesList.add(share);
+		}
+		
+	}
 
-	public static void main(String[] args)
+	//method to get details of stocks
+	@Override
+	public void getStockDetails() {
+		for (Stocks stocks : sharesList) {
+			System.out.println(stocks);
+		}		
+	}
+
+	//method to calculate values
+	@Override
+	public void calculateShareValue()
 	{
-		
-		StockAccountManagement stockservice = new StockAccountManagementImpl();
-		Scanner scanner = new Scanner(System.in);
+		double totalvalue = 0;
+		for (Stocks stocks : sharesList)
 		{
-		System.out.println("welcome to Stock management");
-		{
-		System.out.println("Enter the num of shares to add: ");
-		int numOfShares = scanner.nextInt();
-		{
-		
-		for (int index = 0; index < numOfShares; index++) {
-			
-			Stocks newItem = new Stocks();
-			
-			System.out.println("Enter Share name: ");
-			newItem.setShareName(scanner.next());
-			System.out.println("Enter share Price: ");
-			newItem.setSharePrice(scanner.nextDouble());
-			System.out.println("Enter no. of share taken: ");
-			newItem.setShareCount(scanner.nextDouble());	
-			stockservice.addStocks(newItem);
+			double value = stocks.getShareCount() *stocks.getSharePrice();
+			System.out.println("Value of "+stocks.getShareName()+" is "+value);
+			totalvalue = totalvalue + value;
 		}
-		stockservice.getStockDetails();
-		stockservice.calculateShareValue();
+		System.out.println("Total value is: "+totalvalue);
+	}
 
-		}
+	@Override
+	public void removeStock(String shareName) {
+		for (Stocks stocks : sharesList) {
+			if(stocks.getShareName().equals(shareName))
+			{
+				stocks.setShareCount(0);
+				stocks.setShareName(null);
+				stocks.setSharePrice(0);
+				
+			}		
 		}
 		
-		}
-		}
+	}
 
-			
+	@Override
+	public void sellStocks(int count, String symbol) {
+		
+		
+	}
 
+	@Override
+	public void buyStocks(int count, String symbol) {
+		
+		
+	}
+		
+}
